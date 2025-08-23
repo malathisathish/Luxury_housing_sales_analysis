@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxury Housing Sales Analysis - Bengaluru</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 25%, #90caf9 50%, #64b5f6 75%, #42a5f5 100%);
+            color: #1a237e;
+            overflow: hidden;
+        }
+
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            background-image: 
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><linearGradient id="buildingGrad" x1="0%" y1="100%" x2="0%" y2="0%"><stop offset="0%" style="stop-color:%23ffffff;stop-opacity:0.02"/><stop offset="100%" style="stop-color:%23ffffff;stop-opacity:0.08"/></linearGradient></defs><g opacity="0.1"><rect x="100" y="400" width="60" height="200" fill="url(%23buildingGrad)"/><rect x="180" y="350" width="80" height="250" fill="url(%23buildingGrad)"/><rect x="280" y="380" width="70" height="220" fill="url(%23buildingGrad)"/><rect x="370" y="320" width="90" height="280" fill="url(%23buildingGrad)"/><rect x="480" y="360" width="65" height="240" fill="url(%23buildingGrad)"/><rect x="800" y="320" width="75" height="280" fill="url(%23buildingGrad)"/><rect x="890" y="280" width="85" height="320" fill="url(%23buildingGrad)"/><rect x="990" y="340" width="70" height="260" fill="url(%23buildingGrad)"/><rect x="1080" y="300" width="80" height="300" fill="url(%23buildingGrad)"/></g></svg>');
+            background-repeat: no-repeat;
+            background-position: bottom center;
+            background-size: cover;
+        }
+
+        .slide {
+            width: 100%;
+            height: 100%;
+            padding: 60px;
+            display: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Enhanced Glassmorphism Effects */
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(33, 150, 243, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 40% 60%, rgba(100, 181, 246, 0.15) 0%, transparent 50%);
+            backdrop-filter: blur(2px);
+            pointer-events: none;
+        }
+
+        .house-icon {
+            position: absolute;
+            top: 30px;
+            right: 80px;
+            font-size: 3em;
+            opacity: 0.6;
+            background: linear-gradient(45deg, #1976d2, #42a5f5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(2px 2px 4px rgba(25, 118, 210, 0.3));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .slide h1 {
+            font-size: 3.5em;
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-align: center;
+            background: linear-gradient(135deg, #1976d2 0%, #42a5f5 50%, #1565c0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 2px 2px 8px rgba(25, 118, 210, 0.4);
+            animation: slideInUp 1s ease-out;
+            position: relative;
+        }
+
+        .slide h2 {
+            font-size: 2.5em;
+            font-weight: 600;
+            margin-bottom: 40px;
+            text-align: center;
+            color: #1565c0;
+            text-shadow: 2px 2px 6px rgba(25, 118, 210, 0.3);
+            animation: slideInUp 1s ease-out 0.2s both;
+            position: relative;
+        }
+
+        .slide h3 {
+            font-size: 1.8em;
+            font-weight: 500;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #1976d2, #42a5f5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 1px 1px 4px rgba(25, 118, 210, 0.3);
+        }
+
+        .slide p, .slide li {
+            font-size: 1.3em;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: #0d47a1;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .subtitle {
+            font-size: 1.5em;
+            font-style: italic;
+            color: #1976d2;
+            margin-bottom: 40px;
+            text-align: center;
+            animation: fadeIn 1s ease-out 0.6s both;
+        }
+
+        /* Enhanced Glassmorphism Containers */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            width: 100%;
+            max-width: 1200px;
+            animation: slideInUp 1s ease-out 0.8s both;
+        }
+
+        .content-box {
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.6) 0%, 
+                rgba(255, 255, 255, 0.3) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            border-radius: 25px;
+            padding: 35px;
+            backdrop-filter: blur(25px);
+            box-shadow: 
+                0 8px 32px rgba(25, 118, 210, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .content-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.1), 
+                transparent);
+            transition: left 0.5s ease;
+        }
+
+        .content-box:hover::before {
+            left: 100%;
+        }
+
+        .content-box:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 
+                0 16px 48px rgba(25, 118, 210, 0.3),
+                0 0 30px rgba(66, 165, 245, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+            border-color: rgba(25, 118, 210, 0.4);
+        }
+
+        .methodology-steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .step {
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.2) 0%, 
+                rgba(255, 255, 255, 0.08) 100%);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .step:hover {
+            transform: scale(1.08) translateY(-5px);
+            background: linear-gradient(135deg, 
+                rgba(255, 215, 0, 0.25) 0%, 
+                rgba(255, 215, 0, 0.1) 100%);
+            box-shadow: 
+                0 16px 40px rgba(0, 0, 0, 0.3),
+                0 0 30px rgba(255, 215, 0, 0.3);
+        }
+
+        .step-icon {
+            font-size: 3.5em;
+            margin-bottom: 15px;
+            filter: drop-shadow(2px 2px 6px rgba(0,0,0,0.4));
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .chart-container {
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.12) 0%, 
+                rgba(255, 255, 255, 0.06) 100%);
+            border-radius: 25px;
+            padding: 35px;
+            margin: 30px 0;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 100%;
+            max-width: 900px;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .chart-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 16px 48px rgba(0, 0, 0, 0.4),
+                0 0 20px rgba(255, 215, 0, 0.1);
+        }
+
+        .chart-placeholder {
+            height: 320px;
+            background: linear-gradient(135deg, #2196f3 0%, #21cbf3 50%, #1976d2 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4em;
+            color: white;
+            margin-bottom: 25px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .chart-placeholder::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.15), 
+                transparent);
+            transform: rotate(45deg);
+            animation: shimmer 3s infinite;
+        }
+
+        .insight-box {
+            background: linear-gradient(135deg, 
+                rgba(255, 215, 0, 0.9) 0%, 
+                rgba(255, 237, 78, 0.8) 100%);
+            color: #1a237e;
+            border-radius: 20px;
+            padding: 25px;
+            margin: 25px 0;
+            font-weight: 600;
+            font-size: 1.1em;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            box-shadow: 
+                0 8px 25px rgba(255, 215, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            animation: pulse 3s infinite alternate;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .insight-box::before {
+            content: '💡';
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+
+        .key-findings {
+            background: linear-gradient(135deg, 
+                rgba(76, 175, 80, 0.15) 0%, 
+                rgba(76, 175, 80, 0.05) 100%);
+            border-left: 4px solid #4caf50;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 15px;
+            backdrop-filter: blur(15px);
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.25) 0%, 
+                rgba(255, 255, 255, 0.1) 100%);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 35px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            font-weight: 600;
+            font-size: 1.1em;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-btn:hover {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #1a237e;
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 
+                0 12px 30px rgba(255, 215, 0, 0.4),
+                0 0 20px rgba(255, 215, 0, 0.2);
+        }
+
+        .slide-counter {
+            position: fixed;
+            top: 30px;
+            right: 140px;
+            background: linear-gradient(135deg, 
+                rgba(0, 0, 0, 0.6) 0%, 
+                rgba(0, 0, 0, 0.4) 100%);
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .bullet-points {
+            list-style: none;
+            padding: 0;
+        }
+
+        .bullet-points li {
+            position: relative;
+            padding-left: 35px;
+            margin-bottom: 18px;
+            animation: slideInLeft 0.6s ease-out;
+            animation-fill-mode: both;
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.05) 0%, 
+                rgba(255, 255, 255, 0.02) 100%);
+            padding: 15px 15px 15px 45px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .bullet-points li:nth-child(1) { animation-delay: 0.1s; }
+        .bullet-points li:nth-child(2) { animation-delay: 0.2s; }
+        .bullet-points li:nth-child(3) { animation-delay: 0.3s; }
+        .bullet-points li:nth-child(4) { animation-delay: 0.4s; }
+        .bullet-points li:nth-child(5) { animation-delay: 0.5s; }
+        .bullet-points li:nth-child(6) { animation-delay: 0.6s; }
+
+        .bullet-points li::before {
+            content: '🏠';
+            position: absolute;
+            left: 15px;
+            top: 15px;
+            font-size: 1.3em;
+        }
+
+        .top-insights li::before { content: '💡'; }
+        .recommendations li::before { content: '🚀'; }
+        .key-findings li::before { content: '🔍'; }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #ffd700, #ffed4e, #21cbf3);
+            transition: width 0.4s ease;
+            z-index: 1001;
+            box-shadow: 0 2px 10px rgba(255, 215, 0, 0.4);
+        }
+
+        .data-highlight {
+            background: linear-gradient(135deg, #2196f3, #21cbf3);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            display: inline-block;
+            margin: 0 5px;
+            box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
+        }
+
+        .section-title {
+            font-size: 1.2em;
+            color: #ffd700;
+            font-weight: 600;
+            margin-bottom: 15px;
+            border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+            padding-bottom: 8px;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(60px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-60px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+
+        @keyframes pulse {
+            0% { 
+                box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+                transform: scale(1);
+            }
+            100% { 
+                box-shadow: 0 12px 35px rgba(255, 215, 0, 0.6);
+                transform: scale(1.02);
+            }
+        }
+
+        .interactive-element {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .interactive-element:hover {
+            transform: scale(1.02);
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 30px 20px;
+            }
+            
+            .slide h1 {
+                font-size: 2.2em;
+            }
+            
+            .slide h2 {
+                font-size: 1.8em;
+            }
+            
+            .content-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .methodology-steps {
+                grid-template-columns: 1fr;
+            }
+            
+            .house-icon {
+                right: 20px;
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <div class="progress-bar" id="progressBar"></div>
+        <div class="slide-counter" id="slideCounter">1 / 17</div>
+        
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <div class="house-icon">🏢</div>
+            <h1>Luxury Housing Sales Analysis</h1>
+            <div class="subtitle">Bengaluru Market Intelligence Dashboard</div>
+            <p class="subtitle">From Raw Data to Real Estate Insights</p>
+            <div class="insight-box interactive-element">
+                📊 Based on 100,000+ Premium Housing Sales Records
+            </div>
+        </div>
+
+        <!-- Slide 2: Introduction -->
+        <div class="slide">
+            <div class="house-icon">🏘️</div>
+            <h2>Project Overview & Data Foundation</h2>
+            <div class="content-grid">
+                <div class="content-box interactive-element">
+                    <div class="section-title">📋 Project Scope</div>
+                    <p>Comprehensive analysis of Bengaluru's luxury housing market using advanced Power BI analytics and data visualization techniques</p>
+                    <ul class="bullet-points">
+                        <li>Market trend identification</li>
+                        <li>Builder performance analysis</li>
+                        <li>Customer behavior insights</li>
+                    </ul>
+                </div>
+                <div class="content-box interactive-element">
+                    <div class="section-title">📊 Data Foundation</div>
+                    <p><strong>Source:</strong> Luxury_Housing_Bangalore.csv</p>
+                    <p><strong>Records:</strong> <span class="data-highlight">100,000+</span> sales transactions</p>
+                    <p><strong>Coverage:</strong> Premium properties across Bengaluru micro-markets</p>
+                    <p><strong>Timeline:</strong> Q1 2023 - Q4 2024</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Problem Statement -->
+        <div class="slide">
+            <div class="house-icon">🎯</div>
+            <h2>Market Challenges & Strategic Focus</h2>
+            <div class="content-grid">
+                <div class="content-box interactive-element">
+                    <div class="section-title">🏙️ Market Dynamics</div>
+                    <ul class="bullet-points">
+                        <li>Rapid urbanization driving luxury housing demand</li>
+                        <li>Fragmented market insights across micro-markets</li>
+                        <li>Complex buyer behavior patterns</li>
+                        <li>Competition intensifying among premium builders</li>
+                    </ul>
+                </div>
+                <div class="content-box interactive-element">
+                    <div class="section-title">🎯 Strategic Objectives</div>
+                    <ul class="bullet-points">
+                        <li>Identify high-potential micro-markets</li>
+                        <li>Optimize pricing and positioning strategies</li>
+                        <li>Enhance buyer segmentation approaches</li>
+                        <li>Improve sales channel efficiency</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Methodology -->
+        <div class="slide">
+            <div class="house-icon">🛠️</div>
+            <h2>Data Analytics Methodology & Process</h2>
+            <div class="methodology-steps">
+                <div class="step interactive-element">
+                    <div class="step-icon">🎯</div>
+                    <h3>Problem Definition</h3>
+                    <p>Market analysis scope & strategic objectives</p>
+                </div>
+                <div class="step interactive-element">
+                    <div class="step-icon">🧹</div>
+                    <h3>Data Processing</h3>
+                    <p>100,000+ records cleaned & validated</p>
+                </div>
+                <div class="step interactive-element">
+                    <div class="step-icon">💻</div>
+                    <h3>SQL Architecture</h3>
+                    <p>Optimized database schema design</p>
+                </div>
+                <div class="step interactive-element">
+                    <div class="step-icon">📊</div>
+                    <h3>Power BI Modeling</h3>
+                    <p>Interactive dashboard development</p>
+                </div>
+                <div class="step interactive-element">
+                    <div class="step-icon">📈</div>
+                    <h3>Advanced Analytics</h3>
+                    <p>Insights extraction & visualization</p>
+                </div>
+                <div class="step interactive-element">
+                    <div class="step-icon">🚀</div>
+                    <h3>Strategic Recommendations</h3>
+                    <p>Actionable business strategies</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Market Trends -->
+        <div class="slide">
+            <div class="house-icon">📈</div>
+            <h2>Market Trends Analysis</h2>
+            <p class="subtitle"><em>How have luxury housing bookings changed quarter by quarter across micro-markets?</em></p>
+            <div class="chart-container interactive-element">
+                <div class="chart-placeholder">
+                    📊 Line Chart: Quarter (X-axis) vs Booking Count (Y-axis) by Micro-Market
+                </div>
+                <div class="key-findings">
+                    <div class="section-title">🔍 Key Market Insights</div>
+                    <ul class="bullet-points key-findings">
+                        <li><strong>Whitefield dominates</strong> with <span class="data-highlight">1,200+</span> bookings in Q3 2024 - highest among all micro-markets</li>
+                        <li><strong>Sarjapur Road growth:</strong> Bookings increased from <span class="data-highlight">380</span> (Q1 2023) to <span class="data-highlight">520</span> (Q3 2024)</li>
+                        <li><strong>Indiranagar seasonal peaks:</strong> Q4 2023 spike to <span class="data-highlight">480</span> bookings due to year-end launches</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="insight-box">
+                Whitefield and Sarjapur Road emerge as the most dynamic luxury housing markets
+            </div>
+        </div>
+
+        <!-- Slide 6: Builder Performance -->
+        <div class="slide">
+            <div class="house-icon">🏗️</div>
+            <h2>Builder Performance Analysis</h2>
+            <p class="subtitle"><em>Which builders have the highest total ticket sales and how do they rank in terms of average ticket size?</em></p>
+            <div class="chart-container interactive-element">
+                <div class="chart-placeholder">
+                    💰 Bar Chart: Builder vs Sum(Ticket_Price_Cr) & Avg(Ticket_Price_Cr)
+                </div>
+                <div class="key-findings">
+                    <div class="section-title">🔍 Builder Analysis</div>
+                    <ul class="bullet-points key-findings">
+                        <li><strong>Total Environment leads revenue</strong> with <span class="data-highlight">₹1.89 Cr</span> from 1,200+ sales</li>
+                        <li><strong>Prestige premium leader:</strong> Highest average ticket price at <span class="data-highlight">₹14.9 Cr</span></li>
+                        <li><strong>Brigade volume strategy:</strong> High volume with <span class="data-highlight">₹12.2 Cr</span> average - focuses on volume over premium</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="insight-box">
+                Total Environment dominates volume; Prestige leads in premium positioning strategy
+            </div>
+        </div>
+
+        <!-- Slide 7: Amenity Impact -->
+        <div class="slide">
+            <div class="house-icon">🏊‍♂️</div>
+            <h2>Amenity Impact Analysis</h2>
+            <p class="subtitle"><em>Is there a correlation between amenity score and booking success rate?</em></p>
+            <div class="chart-container interactive-element">
+                <div class="chart-placeholder">
+                    ⭐ Scatter Plot: Amenity_Score vs Booking_Conversion_Rate (bubble size = Project Count)
+                </div>
+                <div class="key-findings">
+                    <div class="section-title">🔍 Amenity Performance Analysis</div>
+                    <ul class="bullet-points key-findings">
+                        <li><strong>High-amenity projects (>8.0 score)</strong> achieve <span class="data-highlight">72-78%</span> booking conversion</li>
+                        <li><strong>Low-amenity impact:</strong> Projects with <6.0 score show <span class="data-highlight">&lt;30%</span> conversion rates</li>
+                        <li><strong>Premium amenities = 2.3x higher</strong> conversion compared to basic facilities</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="insight-box">
+                Premium amenities (gyms, pools, security) are critical success drivers for luxury projects
+            </div>
+        </div>
+
+        <!-- Slide 8: Booking Conversion -->
+        <div class="slide">
+            <div class="house-icon">🎯</div>
+            <h2>Booking Conversion Analysis</h2>
+            <p class="subtitle"><em>Which micro-markets have the highest and lowest booking conversion rates?</em></p>
+            <div class="chart-container interactive-element">
+                <div class="chart-placeholder">
+                    📊 Stacked Column Chart: Micro_Market with % Booking_Status distribution
+                </div>
+                <div class="key-findings">
+                    <div class="section-title">🔍 Conversion Performance</div>
+                    <ul class="bullet-points key-findings">
+                        <li><strong>Whitefield leads conversion</strong> with <span class="data-highlight">72%</span> booking rate - highest in Bengaluru</li>
+                        <li><strong>Domlur underperforms:</strong> Only <span class="data-highlight">48%</span> booking rate despite high inquiries</li>
+                        <li><strong>Hennur Road potential:</strong> <span class="data-highlight">68%</span> conversion shows strong interest</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="insight-box">
+                Whitefield converts best; Domlur needs enhanced sales execution strategies
+            </div>
+        </div>
+
+        <!-- Slide 9: Configuration Demand -->
+        <div class="slide">
+            <div class="house-icon">🏡</div>
+            <h2>Configuration Demand Analysis</h2>
+            <p class="subtitle"><em>What are the most in-demand housing configurations (e.g., 3BHK, 4BHK)?</em></p>
+            <div class="chart-container interactive-element">
+                <div class="chart-placeholder">
+                    🍩 Donut Chart: Configuration vs Booking Count distribution
+                </div>
+                <div class="key-findings">
+                    <div class="section-title">🔍 Configuration Insights</div>
+                    <ul class="bullet-points key-findings">
+                        <li><strong>5BHK+ dominates:</strong> <span class="data-highlight">38%</span> of all bookings - most in-demand configuration</li>
+                        <li><strong>3BHK popularity:</strong> <span class="data-highlight">32%</span> share - popular among NRI and HNI buyers</li>
+                        <li><strong>4BHK steady demand:</strong> <span class="data-highlight">30%</span> - strong in Sarjapur Road and Hebbal</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="insight-box">
+                Buyers prefer larger homes - developers should prioritize 5BHK+ unit launches
+            </div>
+        </div>
+
+        <!-- Slide 10: Sales Channel Efficiency -->
+        <div class="slide">
+            <div class="house-icon">📊</div>
+            <h2>Sales Channel Efficiency Analysis</h2>
+            <p class="subtitle"><em>Which sales channels contribute most to successful bookings?</em></p>
+            <div class="chart-container interactive-element">
+                <div class="chart-placeholder">
+                    📈 100% Stacked Column Chart: Sales_Channel vs Booking_Status distribution
+                </div>
+                <div class="key-findings">
+                    <div class="section-title">🔍 Channel Performance Analysis</div>
+                    <ul class="bullet-points key-findings">
+                        <li><strong>NRI Desk excellence:</strong> <span class="data-highlight">72%</span> booking conversion - highest efficiency</li>
+                        <li><strong>Broker channel gaps:</strong> Only <span class="data-highlight">54%</span> conversion despite high inquiries</li>
+                        <li><strong>Online channel growth:</strong> <span class="data-highlight">63%</span> conversion - effective for tech-savvy buyers</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="insight-box">
+                NRI Desk proves most efficient - recommend scaling this high-performance channel
+            </div>
+        </div>
+
+        <!-- Slide 11: Quarterly Builder Contribution -->
+        <div class="slide">
+            <div class="house-icon">📅</div>
+            <h2>Quarterly Builder Contribution Analysis</h2>
+            <p class="subtitle"><em>Which builders dominate the market each quarter?</em></p>
+            <div class="chart-container interactive-element">
+                <div class="chart-placeholder">
+                    📊 Matrix Table: Builders (Rows) × Quarter (Columns) = Sum(Ticket_Price_Cr)
+                </div>
+                <div class="key-findings">
+                    <div class="section-title">🔍 Quarterly Performance</div>
+                    <ul class="bullet-points key-findings">
+                        <li><strong>Total Environment Q2 2024:</strong> Dominated with <span class="data-highlight">₹68.2 Cr</span> revenue</li>
+                        <li><strong>Puravankara surge:</strong> Q3 2024 growth to <span class="data-highlight">₹54.7 Cr</span> in Whitefield/Hebbal</li>
+                        <li><strong>Brigade decline:</strong> Q4 2024 drop from <span class="data-highlight">₹48 Cr</span> to <span class="data-highlight">₹32 Cr</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="insight-box">
+                Total Environment maintains consistency; Puravankara rising; Brigade needs new project launches
+            </div>
+        </div>
+
+        <!-- Slide 12: Possession Status Analysis -->
+        <div class="slide">
+            <div class="house-icon">🏠</div>
+            <h2>Possession Status Analysis</h2>
+            <p class="subtitle"><em>How does possession status affect buyer type and booking decisions?</em></p>
+            <div class="content-grid">
+                <div class="chart-container interactive-element">
+                    <div class="chart-placeholder">
+                        🏗️ Clustered Column: Possession_Status vs Booking_Status by Buyer_Type
+                    </div>
+                </div>
+                <div class="content-box">
+                    <div class="section-title">🔍 Buyer Behavior Insights</div>
+                    <ul class="bullet-points">
+                        <li><strong>NRI investment focus:</strong> <span class="data-highlight">78%</span> book under-construction homes</li>
+                        <li><strong>HNI/CXO preference:</strong> <span class="data-highlight">72%</span> prefer ready-to-move units</li>
+                        <li><strong>Launch projects:</strong> <span class="data-highlight">68%</span> inquiry-to-booking ratio</li>
+                        <li><strong>Startup Founders:</strong> Show strong early interest in launch phase</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="insight-box">
+                NRIs invest in future potential; HNIs want immediate occupancy - tailor messaging accordingly
+            </div>
+        </div>
+
+        <!-- Slide 13: Geographical Insights -->
+        <div class="slide">
+            <div class="house-icon">🗺️</div>
+            <h2>Geographical Insights: Luxury Project Distribution</h2>
+            <div class="chart-container interactive-element">
+                <div class="chart-placeholder">
+                    🗺️ Map Visualization: Project Concentration in Bengaluru
+                </div>
+                <div class="key-findings">
+                    <div class="section-title">🔍 Geographic Distribution</div>
+                    <ul class="bullet-points key-findings">
+                        <li><strong>Whitefield epicenter:</strong> <span class="data-highlight">28%</span> of all luxury projects - highest density</li>
+                        <li><strong>Emerging hubs:</strong> Sarjapur Road (<span class="data-highlight">22%</span>) and Hebbal (<span class="data-highlight">18%</span>)</li>
+                        <li><strong>Untapped potential:</strong> Domlur and Yelahanka show high buyer interest, low project count</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="insight-box">
+                Whitefield remains the luxury epicenter; Sarjapur Road is the next big opportunity
+            </div>
+        </div>
+
+        <!-- Slide 14: Top Performers -->
+        <div class="slide">
+            <div class="house-icon">🏆</div>
+            <h2>Top Performers: Builder Excellence Matrix</h2>
+            <div class="content-grid">
+                <div class="content-box interactive-element">
+                    <div class="section-title">💰 Revenue Champions</div>
+                    <ul class="bullet-points">
+                        <li><strong>Total Environment:</strong> <span class="data-highlight">₹1.89 Cr</span> - Volume King</li>
+                        <li><strong>Prestige:</strong> <span class="data-highlight">₹1.16 Cr</span> - Premium Leader</li>
+                        <li><strong>L&T Realty:</strong> <span class="data-highlight">₹1.14 Cr</span> - Consistent Performer</li>
+                        <li><strong>Godrej:</strong> <span class="data-highlight">₹1.14 Cr</span> - Quality Focus</li>
+                    </ul>
+                </div>
+                <div class="content-box interactive-element">
+                    <div class="section-title">🎯 Conversion Excellence</div>
+                    <ul class="bullet-points">
+                        <li><strong>Prestige:</strong> <span class="data-highlight">51%</span> conversion rate</li>
+                        <li><strong>L&T Realty:</strong> <span class="data-highlight">51%</span> conversion rate</li>
+                        <li><strong>RMZ:</strong> <span class="data-highlight">51%</span> conversion rate</li>
+                        <li><strong>Sobha:</strong> <span class="data-highlight">70%</span> - Best sales execution</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="insight-box">
+                Total Environment = Volume Leader; Prestige = Premium Pioneer; Sobha = Sales Excellence
+            </div>
+        </div>
+
+        <!-- Slide 15: Pain Points Analysis -->
+        <div class="slide">
+            <div class="house-icon">⚠️</div>
+            <h2>Critical Pain Points: Buyer Feedback Analysis</h2>
+            <div class="content-grid">
+                <div class="content-box interactive-element">
+                    <div class="section-title">📊 Top 3 Buyer Concerns</div>
+                    <ul class="bullet-points">
+                        <li><strong>"Connectivity is poor":</strong> <span class="data-highlight">2,800+</span> mentions</li>
+                        <li><strong>"Too far from my office":</strong> <span class="data-highlight">940+</span> mentions</li>
+                        <li><strong>"Agent was not responsive":</strong> <span class="data-highlight">680+</span> mentions</li>
+                    </ul>
+                </div>
+                <div class="content-box interactive-element">
+                    <div class="section-title">🎯 Impact Assessment</div>
+                    <ul class="bullet-points">
+                        <li><strong>Location matters most:</strong> Connectivity drives purchase decisions</li>
+                        <li><strong>Proximity to workplace:</strong> Key factor for HNI/CXO buyers</li>
+                        <li><strong>Service quality crucial:</strong> Agent responsiveness affects conversions</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="insight-box">
+                Location accessibility and service quality impact sales as much as price and amenities
+            </div>
+        </div>
+
+        <!-- Slide 16: Executive Summary -->
+        <div class="slide">
+            <div class="house-icon">📋</div>
+            <h2>Executive Summary: Strategic Market Intelligence</h2>
+            <ul class="bullet-points top-insights">
+                <li><strong>Market Leadership:</strong> Whitefield & Sarjapur command <span class="data-highlight">32%</span> of total luxury bookings</li>
+                <li><strong>Revenue Champion:</strong> Total Environment leads with <span class="data-highlight">₹1.89 Cr</span> total revenue</li>
+                <li><strong>Channel Excellence:</strong> NRI Desk achieves <span class="data-highlight">72%</span> conversion - most efficient sales channel</li>
+                <li><strong>Configuration Preference:</strong> 5BHK+ units drive <span class="data-highlight">38%</span> of all bookings</li>
+                <li><strong>Amenity Impact:</strong> Premium facilities deliver <span class="data-highlight">2.3x</span> higher conversion rates</li>
+                <li><strong>Investment Patterns:</strong> NRIs favor under-construction; HNIs prefer ready-to-move properties</li>
+            </ul>
+        </div>
+
+        <!-- Slide 17: Strategic Recommendations -->
+        <div class="slide">
+            <div class="house-icon">🚀</div>
+            <h2>Strategic Recommendations: Action Plan</h2>
+            <div class="content-grid">
+                <div class="content-box interactive-element">
+                    <div class="section-title">🎯 For Developers</div>
+                    <ul class="bullet-points recommendations">
+                        <li><strong>Geographic Focus:</strong> Prioritize Whitefield & Sarjapur for new luxury launches</li>
+                        <li><strong>Configuration Strategy:</strong> Develop more 4BHK/5BHK+ units to meet demand</li>
+                        <li><strong>Amenity Investment:</strong> Premium facilities (gym, pool, clubhouse) drive conversions</li>
+                        <li><strong>Connectivity Solutions:</strong> Address transportation and accessibility concerns</li>
+                    </ul>
+                </div>
+                <div class="content-box interactive-element">
+                    <div class="section-title">📈 Sales & Marketing</div>
+                    <ul class="bullet-points recommendations">
+                        <li><strong>Channel Optimization:</strong> Scale NRI Desk operations for global buyers</li>
+                        <li><strong>Segment Targeting:</strong> Tailor messaging by buyer type and possession preferences</li>
+                        <li><strong>Service Excellence:</strong> Improve agent responsiveness and follow-up processes</li>
+                        <li><strong>Digital Enhancement:</strong> Strengthen online channel for tech-savvy buyers</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 18: Future Scope & Conclusion -->
+        <div class="slide">
+            <div class="house-icon">🔮</div>
+            <h2>Future Scope & Strategic Conclusion</h2>
+            <div class="content-box interactive-element">
+                <div class="section-title">🎯 Key Achievements</div>
+                <p>Data-driven approach enables builders & investors to make informed decisions in Bengaluru's competitive luxury housing market</p>
+                
+                <div class="section-title">🔮 Future Enhancement Opportunities</div>
+                <ul class="bullet-points">
+                    <li><strong>Predictive Analytics:</strong> AI-powered demand forecasting models</li>
+                    <li><strong>ROI Analysis:</strong> Rental yield and investment return calculations</li>
+                    <li><strong>Dynamic Pricing:</strong> Real-time market-based pricing optimization</li>
+                    <li><strong>Sentiment Tracking:</strong> Social media and review-based market sentiment</li>
+                </ul>
+            </div>
+            <div class="insight-box">
+                Transform data insights into competitive advantage through strategic implementation
+            </div>
+        </div>
+
+        <!-- Slide 19: Q&A -->
+        <div class="slide">
+            <div class="house-icon">❓</div>
+            <h1>Questions & Discussion</h1>
+            <div class="subtitle">Thank you for your attention!</div>
+            <div class="insight-box interactive-element">
+                💬 Ready to discuss insights, strategies, and implementation approaches
+            </div>
+            <div class="content-box" style="margin-top: 40px; max-width: 600px;">
+                <div class="section-title">📊 Dashboard Highlights</div>
+                <p style="font-size: 1.3em; text-align: center; color: #ffd700;">
+                    🏢 Luxury Housing Market Intelligence Dashboard<br>
+                    📈 100,000+ Records | 17 Micro-Markets | 10+ Premium Builders
+                </p>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-btn" onclick="previousSlide()">← Previous</button>
+            <button class="nav-btn" onclick="nextSlide()">Next →</button>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            
+            // Update counter
+            document.getElementById('slideCounter').textContent = `${currentSlide + 1} / ${totalSlides}`;
+            
+            // Update progress bar
+            const progressBar = document.getElementById('progressBar');
+            const progress = ((currentSlide + 1) / totalSlides) * 100;
+            progressBar.style.width = progress + '%';
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function previousSlide() {
+            showSlide(currentSlide - 1);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowRight' || event.key === 'Space') {
+                nextSlide();
+            } else if (event.key === 'ArrowLeft') {
+                previousSlide();
+            }
+        });
+
+        // Touch navigation for mobile
+        let startX = null;
+        document.addEventListener('touchstart', function(event) {
+            startX = event.touches[0].clientX;
+        });
+
+        document.addEventListener('touchend', function(event) {
+            if (startX === null) return;
+            
+            const endX = event.changedTouches[0].clientX;
+            const diff = startX - endX;
+            
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) {
+                    nextSlide();
+                } else {
+                    previousSlide();
+                }
+            }
+            
+            startX = null;
+        });
+
+        // Interactive elements animation
+        document.querySelectorAll('.interactive-element').forEach(element => {
+            element.addEventListener('click', function() {
+                this.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 200);
+            });
+        });
+
+        // Initialize progress bar
+        showSlide(0);
+    </script>
+</body>
+</html>
+                        
