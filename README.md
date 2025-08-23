@@ -29,7 +29,7 @@ The luxury housing market faces challenges such as:
 - The dataset contains **100,000+ housing sales records** including attributes like:  
   - Project ID, Micro-Market, Developer, Ticket Price, Unit Size, Amenity Score, Booking Flag, Buyer Type, Possession Status, Sales Channel, etc.  
 
-🔗 **Uncleaned CSV File Download** – [Click Here](./data/uncleaned_luxury_housing.csv) (ensure dataset is placed in the `data/` folder).  
+🔗 **Uncleaned CSV File Download** – [Click Here](C:\Users\sathishkumar\Downloads\Luxury_housing_sales_analysis\Data\Luxury_Housing_Bangalore.csv) (ensure dataset is placed in the `data/` folder).  
 
 ---
 
@@ -196,10 +196,13 @@ Thank you for reviewing this project. Your feedback is welcome!
 ## 📸 Project Screenshots
 
 ### Page 1 – Market Trends, Builder Performance, Amenity Impact
-![Dashboard Page 1](./assets/Screenshot1.png)
+![Dashboard Page 1](<img width="1920" height="1020" alt="Screenshot 2025-08-24 001811" src="https://github.com/user-attachments/assets/b0a3a906-11f5-4854-8779-bea11f2ad9f7" />
+)
 
 ### Page 2 – Sales Channel, Geographical Insights, Top Performers
-![Dashboard Page 2](./assets/Screenshot2.png)
+![Dashboard Page 2](<img width="1920" height="1020" alt="Screenshot 2025-08-24 001837" src="https://github.com/user-attachments/assets/389f7318-0d7c-40b5-b27c-5ad20f3b430f" />
+)
 
 ### Page 3 – Insights Summary
-![Dashboard Page 3](./assets/Screenshot3.png)
+![Dashboard Page 3](<img width="1920" height="1020" alt="Screenshot 2025-08-24 001902" src="https://github.com/user-attachments/assets/624483af-72d5-4dc5-a5b0-6e0d822fd8d2" />
+)
