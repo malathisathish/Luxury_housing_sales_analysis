@@ -1,0 +1,112 @@
+LUXURY HOUSING MARKET INSIGHTS – BENGALURU
+Executive Summary | Based on 100,000+ Sales Records
+
+📊 1. Market Trends
+Line Chart: Bookings by Quarter & Micro-Market
+
+🔍 Key Insights:
+Whitefield leads in bookings with over 1,200 bookings in Q3 2024 — the highest among all micro-markets.
+Sarjapur Road shows steady growth — bookings increased from ~380 in Q1 2023 to ~520 in Q3 2024, indicating rising demand.
+Indiranagar has seasonal spikes — peak in Q4 2023 (~480 bookings), likely due to year-end property launches.
+💡 Whitefield and Sarjapur Road are the most dynamic markets for luxury housing. 
+
+📊 2. Builder Performance
+Bar Chart: Revenue vs. Avg Ticket Size by Builder
+
+🔍 Key Insights:
+Total Environment leads in total revenue with ₹1.89 Cr from 1,200+ sales — highest in the dataset.
+Prestige has the highest average ticket price at ₹14.9 Cr (e.g., PROP004042, PROP090609), indicating premium positioning.
+Brigade has high volume but lower average price (₹12.2 Cr) — focuses on volume over premium pricing.
+💡 Total Environment dominates volume; Prestige leads in premium pricing. 
+
+📊 3. Amenity Impact
+Scatter Plot: Amenity Score vs. Booking Conversion Rate
+
+🔍 Key Insights:
+Projects with Amenity Score >8.0 (e.g., PROP090609: 8.54) have 72–78% booking conversion — 2.3x higher than low-amenity projects.
+Low-amenity projects (Score <6.0) like PROP001033 (5.82) have <30% conversion — poor amenities hurt sales.
+PROP036652 (Bellary Road) has Amenity Score of 6.79 and 100% booking rate — outlier due to "Connectivity is poor" (low competition?).
+💡 High amenity score = high conversion. Developers should invest in gyms, pools, and security. 
+
+📊 4. Booking Conversion
+Stacked Column: % Booking Status by Micro-Market
+
+🔍 Key Insights:
+Whitefield has 72% booking rate — highest in Bengaluru (e.g., PROP071376, PROP034916)
+Domlur has only 48% booking rate — despite high inquiries, conversion is low (e.g., PROP029742)
+Hennur Road shows 68% conversion — strong interest but needs better follow-up to close more deals.
+💡 Whitefield converts best; Domlur needs better sales execution. 
+
+📊 5. Configuration Demand
+Donut Chart: Most In-Demand Housing Configurations
+
+🔍 Key Insights:
+5BHK+ units account for 38% of all bookings — most in-demand configuration (e.g., PROP032301, PROP001060)
+3BHK units make up 32% — popular among NRI and HNI buyers (e.g., PROP053700, PROP076808)
+4BHK units at 30% — slightly less popular, but still strong demand in Sarjapur Road and Hebbal.
+💡 Buyers prefer larger homes — developers should launch more 5BHK+ units. 
+
+📊 6. Sales Channel Efficiency
+100% Stacked Column: Sales Channel vs. Booking Status
+
+🔍 Key Insights:
+NRI Desk has 72% booking conversion — highest of all channels (e.g., PROP053700, PROP034916)
+Broker channel converts at only 54% — high inquiries but poor follow-up (e.g., PROP001085)
+Online channel has 63% conversion — effective for tech-savvy buyers (e.g., PROP034917, PROP079158)
+💡 NRI Desk is the most efficient — recommend scaling this channel. 
+
+📊 7. Quarterly Builder Contribution
+Matrix: Builders by Quarter & Revenue
+
+🔍 Key Insights:
+Total Environment dominated Q2 2024 with ₹68.2 Cr in revenue — highest quarterly contribution.
+Puravankara surged in Q3 2024 with ₹54.7 Cr — aggressive launches in Whitefield and Hebbal.
+Brigade declined in Q4 2024 — revenue dropped from ₹48 Cr to ₹32 Cr — possible lack of new projects.
+💡 Total Environment is consistent; Puravankara is rising; Brigade needs new launches. 
+
+📊 8. Possession Status Analysis
+Clustered Column: Possession Status vs. Booking Status by Buyer_Type
+
+🔍 Key Insights:
+NRIs book 78% of "Under Construction" homes — investment-driven (e.g., PROP053701, PROP034917)
+HNI/CXO buyers prefer "Ready To Move" (72% of bookings) — want immediate occupancy (e.g., PROP005045, PROP066652)
+"Launch" projects have 68% inquiry-to-booking ratio — strong early interest, especially from Startup Founders.
+💡 NRIs invest in future; HNIs want now. Developers should tailor messaging. 
+
+📊 9. Geographical Insights
+Map: Project Concentration in Bengaluru
+
+🔍 Key Insights:
+Whitefield has 28% of all luxury projects — highest density (e.g., PROP034916, PROP071376)
+Sarjapur Road and Hebbal follow with 22% and 18% respectively — emerging hubs
+Domlur and Yelahanka have low project count but high buyer comments — untapped potential
+💡 Whitefield is the epicenter; Sarjapur Road is the next big thing. 
+
+📊 10. Top Performers
+KPI Cards: Top 5 Builders by Revenue & Booking Success
+
+🔍 Key Insights:
+Total Environment is #1 builder with ₹1.89 Cr total revenue and 1,200+ bookings
+Prestige has highest avg price (₹14.9 Cr) and 68% conversion — premium leader
+Sobha has 70% conversion rate — best sales execution despite lower revenue
+💡 Total Environment = volume king; Prestige = premium leader; Sobha = sales efficiency. 
+
+📌 Final Summary: Top 3 Pain Points from Buyer Comments
+"Connectivity is poor" → 2,800+ mentions (e.g., PROP001061, PROP006588)
+"Too far from my office" → 940+ mentions (e.g., PROP009319)
+"Agent was not responsive" → 680+ mentions — a red flag for sales teams
+💡 Location and service matter as much as price and amenities. 
+
+
+👩‍💻 Author
+Malathi Y Data Science Enthusiast | Former Staff Nurse turned Aspiring Data Analyst
+
+💬 Feedback? Questions? Contributions? We’d love to hear from you!
+
+📧 Email: malathisathish2228@gmail.com
+
+🔗 LinkedIn: linkedin.com/in/malathi-sathish-016a03354
+
+💻 GitHub: github.com/malathisathish
+
+💡 “Transforming clinical experience into data-driven insights — where empathy meets analytics.”

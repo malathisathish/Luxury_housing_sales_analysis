@@ -1,0 +1,16 @@
+DAX Measures :
+
+♥ Avg Ticket Price (Cr) = 
+AVERAGE('public fact_sales'[Ticket_Price_Cr])
+
+♥ Booking Conversion Rate = 
+DIVIDE([Total Bookings], [Total Inquiries])
+
+♥ Total Bookings = 
+CALCULATE(COUNTROWS('public fact_sales'), 'public fact_sales'[Booking_Flag] = 1)
+
+♥ Total Count = COUNT('public fact_sales'[Ticket_Price_Cr])
+
+♥ Total Inquiries = COUNTROWS('public fact_sales')
+
+♥ Total Revenue (Cr) = SUM('public fact_sales' [Ticket_Price_Cr])
