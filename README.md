@@ -29,7 +29,7 @@ The luxury housing market faces challenges such as:
 - The dataset contains **100,000+ housing sales records** including attributes like:  
   - Project ID, Micro-Market, Developer, Ticket Price, Unit Size, Amenity Score, Booking Flag, Buyer Type, Possession Status, Sales Channel, etc.  
 
-🔗 **Uncleaned CSV File Download** – [Click Here](C:\Users\sathishkumar\Downloads\Luxury_housing_sales_analysis\Data\Luxury_Housing_Bangalore.csv) (ensure dataset is placed in the `data/` folder).  
+🔗 **Uncleaned CSV File Download** – [Click Here (C:\Users\sathishkumar\Downloads\Luxury_housing_sales_analysis\Data\Luxury_Housing_Bangalore.csv)] (ensure dataset is placed in the `data/` folder).  
 
 ---
 
@@ -188,8 +188,8 @@ Thank you for reviewing this project. Your feedback is welcome!
 ## ✍️ Author Details
 👩‍💻 **Author**: Malathi.y 
 🎓 **Role**: Data Science Enthusiast  
-📧 **Contact**: [your-email@example.com]  
-📌 **GitHub**: [your-github-link]  
+📧 **Contact**: [malathisathish2228@gmail.com]  
+📌 **GitHub**: [https://github.com/malathisathish/Luxury_housing_sales_analysis]  
 
 ---
 
