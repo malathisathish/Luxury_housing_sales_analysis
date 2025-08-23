@@ -1,0 +1,15 @@
+pandas==2.2.2            # Data loading, cleaning, manipulation
+numpy==1.26.4            # Numerical computations and array operations
+sqlalchemy==2.0.31       # Database connection and ORM for SQL operations
+plotly==5.22.0           # Interactive data visualizations
+csv                     # Built-in Python module for CSV file handling
+requests==2.32.3         # HTTP requests for fetching external data
+matplotlib==3.9.0        # Static data visualization and plotting
+seaborn==0.13.2          # Statistical data visualization, heatmaps, correlations
+datetime                 # Built-in module for date and time operations
+re                       # Built-in module for regex pattern matching
+warnings                 # Built-in module for handling warnings
+os                       # Built-in module for file and path operations
+psycopg2-binary==2.9.9   # PostgreSQL database adapter for Python
+
+
