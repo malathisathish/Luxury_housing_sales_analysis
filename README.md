@@ -622,3 +622,5 @@ Data Science Enthusiast | Former Staff Nurse turned Aspiring Data Analyst
 💻 **GitHub:** [github.com/malathisathish](https://github.com/malathisathish)
 
 💡 *"Transforming clinical experience into data-driven insights — where empathy meets analytics."*
+![Uploading image.png…]()
+
